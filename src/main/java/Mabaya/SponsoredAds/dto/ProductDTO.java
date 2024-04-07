@@ -1,7 +1,9 @@
 package Mabaya.SponsoredAds.dto;
 
-import java.security.SecureRandom;
+import lombok.Data;
 
+import java.security.SecureRandom;
+@Data
 public class ProductDTO {
     private Long id;
     private String title;
