@@ -20,19 +20,22 @@ public class CampaignService {
     @Autowired
     private ProductRepository productRepository;
 
-    public CampaignDTO createCampaign(CampaignDTO campaignDTO)
-    {
-        log.debug("start createCampaign");
-        Campaign campaign  = new Campaign();
+    public CampaignDTO createCampaign(CampaignDTO campaignDTO) {
+        log.debug("Start createCampaign");
+        List<Product> products = productRepository.findAllById(campaignDTO.getProductIds());
+        if (products.size() != campaignDTO.getProductIds().size()) {
+            log.error("Some products not found");
+        }
+
+        Campaign campaign = new Campaign();
         campaign.setName(campaignDTO.getName());
         campaign.setStartDate(campaignDTO.getStartDate());
         campaign.setBid(campaignDTO.getBid());
-        List<Product>products=productRepository.findAllById(campaignDTO.getProductIds());
         campaign.setProducts(products);
-        campaign = (Campaign) campaignRepository.save(campaign);
-        log.debug("finished create campaign");
+        campaign = campaignRepository.save(campaign);
+
+        log.debug("Finished create campaign");
         return CampaignMapper.toDTO(campaign);
-
-
     }
 }
+

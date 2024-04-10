@@ -4,6 +4,9 @@ import Mabaya.SponsoredAds.entity.Product;
 
 public class ProductMapper {
     public static ProductDTO toDTO(Product product) {
+        if (product == null) {
+            return null;
+        }
         ProductDTO dto = new ProductDTO();
         dto.setId(product.getId());
         dto.setTitle(product.getTitle());
